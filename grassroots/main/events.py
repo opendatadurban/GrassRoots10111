@@ -9,7 +9,10 @@ def joined(message):
     A status message is broadcast to all people in the room."""
     room = session.get('room')
     join_room(room)
-    emit('status', {'msg': session.get('name') + ' has entered the room.'}, room=room)
+    if 'Admin' in session.get('name'):
+        emit('status', {'msg': session.get('name') + ' is online'}, room=room)
+    else:
+        emit('status', {'msg': session.get('name') + ' needs help at:' + session.get('location')}, room=room)
 
 
 @socketio.on('text', namespace='/chat')
